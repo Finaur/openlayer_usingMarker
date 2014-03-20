@@ -1,0 +1,141 @@
+<html>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>OpenLayers Basic Example</title>
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/css/docs.css" rel="stylesheet">
+    <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+    
+    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+    <script type="text/javascript">
+            var lat	= 0.00;
+            var lon	= 120.00;
+            var zoom	= 5;
+            var map;
+ 
+            function init(){
+                map = new OpenLayers.Map ("map", {
+                controls:[
+			      new OpenLayers.Control.Navigation(),
+			      new OpenLayers.Control.PanZoomBar(),
+			      new OpenLayers.Control.LayerSwitcher(),
+			      new OpenLayers.Control.Attribution()
+			  ],
+                    projection: new OpenLayers.Projection("EPSG:900913")
+                } );
+ 						
+ 		//Define data layer map
+                var osm 	= new OpenLayers.Layer.OSM("Map OSM");            
+		var gmap 	= new OpenLayers.Layer.Google("Map Google");
+		map.addLayers([osm, gmap]);                
+                
+                var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+                map.setCenter (lonLat, zoom);
+                
+                map.addControl( new OpenLayers.Control.MousePosition() );
+                
+		var markers = new OpenLayers.Layer.Markers( "Markers" );
+		map.addLayer(markers);
+    
+		var size = new OpenLayers.Size(21,25);
+		var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+		var icon = new OpenLayers.Icon('assets/img/MapMarker_Marker_Outside_Pink.png',size,offset);
+		
+		//Object-1
+		var lonLat_1 = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+		var marker_1 = new OpenLayers.Marker(lonLat_1, icon);
+		marker_1.events.register('mousedown', marker_1, function(evt) { 
+		popup = new OpenLayers.Popup("chicken",
+						lonLat,
+						new OpenLayers.Size(200,30),
+						"<b>Kalimantan</b>",
+						true);
+						    
+			map.addPopup(popup);
+			OpenLayers.Event.stop(evt); 
+				    });		            																													
+		markers.addMarker(marker_1);
+		
+		//Object-2
+		var lonLat_2 = new OpenLayers.LonLat(107.00, -6.50).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+		var marker_2 = new OpenLayers.Marker(lonLat_2, icon.clone());
+		marker_2.events.register('mousedown', marker_2, function(evt) { 
+		popup = new OpenLayers.Popup("chicken",
+					      lonLat_2,
+					      new OpenLayers.Size(200,30),
+					      "<b>Banten</b> <br />",
+					      true);
+			  
+			map.addPopup(popup);
+			OpenLayers.Event.stop(evt); 
+				    });		            																													
+		markers.addMarker(marker_2);	
+		
+		//object-3
+		var lonLat_3 = new OpenLayers.LonLat(115.00, -08.50).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+		var marker_3 = new OpenLayers.Marker(lonLat_3, icon.clone());
+		marker_3.events.register('mousedown', marker_3, function(evt) { 
+		popup = new OpenLayers.Popup("chicken",
+					      lonLat_3,
+					      new OpenLayers.Size(200,30),
+					      "<b>Bali</b> <br />",
+					      true);
+			  
+			map.addPopup(popup);
+			OpenLayers.Event.stop(evt); 
+				    });		            																													
+		markers.addMarker(marker_3);
+		
+		//object-4
+		var lonLat_4 = new OpenLayers.LonLat(140.00, -08.50).transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"));
+		var marker_4 = new OpenLayers.Marker(lonLat_4, icon.clone());
+		marker_3.events.register('mousedown', marker_4, function(evt) { 
+		popup = new OpenLayers.Popup("chicken",
+					      lonLat_4,
+					      new OpenLayers.Size(200,30),
+					      "<b>Bali</b> <br />",
+					      true);
+			  
+			map.addPopup(popup);
+			OpenLayers.Event.stop(evt); 
+				    });		            																													
+		markers.addMarker(marker_4);
+            }
+        </script>
+
+</head>
+
+<body onload="init();">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+           <a class="brand" href="#">OpenLayers <i class="icon-globe icon-white"></i></a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="index.html">Home</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="container">
+	<div class="page-header">
+	 <h1>OpenLayers Example <small>Using OSM dan Gmap</small></h1>
+	</div>
+	<div class="row-fluild">
+	    <div class="span12">
+		  <div id="map" class="smallmap"></div>
+	    </div>
+	</div>
+    </div>
+</body>
+</html>
